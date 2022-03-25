@@ -1,0 +1,67 @@
+==2485== Memcheck, a memory error detector
+==2485== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2485== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==2485== Command: ./test-t4
+==2485== 
+==2485== (action at startup) vgdb me ... 
+==2485== 
+==2485== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==2485==   /path/to/gdb ./test-t4
+==2485== and then give GDB the following command
+==2485==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=2485
+==2485== --pid is optional if only one valgrind process is running
+==2485== 
+El ejemplo del enunciado
+------------------------
+
+Tpo=0: T1 (core 1) invoca pedir(0)
+Tpo=0: T1 cat 0 obtiene recurso
+Tpo=1:                     T3 (core 2) invoca pedir(0)
+Tpo=2:           T2 (core 3) invoca pedir(1)
+Tpo=3: Esperando que T1 termine
+Tpo=3:                                         T5 (core 4) invoca pedir(0)
+Tpo=4: T1 devuelve recurso
+Tpo=4:           T2 cat 1 obtiene recurso
+Tpo=4: T1 termino
+Tpo=5:                               T4 (core 5) invoca pedir(1)
+Tpo=6:           T2 devuelve recurso
+Tpo=6:                     T3 cat 0 obtiene recurso
+Tpo=6:           Esperando que T2 termine
+Tpo=6:           T2 termino
+Tpo=6:                     Esperando que T3 termine
+Tpo=7:                     T3 devuelve recurso
+Tpo=7:                               T4 cat 1 obtiene recurso
+Tpo=7:                     T3 termino
+Tpo=7:                               Esperando que T4 termine
+Tpo=8:                               T4 devuelve recurso
+Tpo=8:                                         T5 cat 0 obtiene recurso
+Tpo=8:                               T4 termino
+Tpo=8:                                         Esperando que T5 termine
+Tpo=9:                                         T5 devuelve recurso
+Tpo=9:                                         T5 termino
+
+Test de robustez
+----------------
+
+
+despliega unos 70 puntos
+c1 c2 c3 ... significa que ese core comenzo a trabajar
+
+c2c3c1c4c5.c6c7c8c9c10c11.c12c13c14c15.c16c17c18c19c20c21c22c23.c24c25c26.c27c28c29c30c31.c32
+Felicitaciones: funciona
+==2485== 
+==2485== HEAP SUMMARY:
+==2485==     in use at exit: 88 bytes in 1 blocks
+==2485==   total heap usage: 89 allocs, 88 frees, 24,588 bytes allocated
+==2485== 
+==2485== LEAK SUMMARY:
+==2485==    definitely lost: 0 bytes in 0 blocks
+==2485==    indirectly lost: 0 bytes in 0 blocks
+==2485==      possibly lost: 0 bytes in 0 blocks
+==2485==    still reachable: 88 bytes in 1 blocks
+==2485==         suppressed: 0 bytes in 0 blocks
+==2485== Reachable blocks (those to which a pointer was found) are not shown.
+==2485== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==2485== 
+==2485== For counts of detected and suppressed errors, rerun with: -v
+==2485== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,0 +1,23 @@
+#include <nSystem.h>
+#include <fifoqueues.h>
+#include "spinlock.h"
+#include "pedir.h"
+
+... declare las variables globales que necesite ...
+
+void iniciar() {
+  ... inicialice aca las variables globales ...
+}
+
+void terminar() {
+  ... libere recursos solicitados como fifoqueues y spinlocks ...
+}
+
+void pedir(int cat) {
+  ... recuerde que no puede usar nMalloc, nMakeSem, nMakeMonitor, etc.
+  ... use nPrintf solo para fines de depuracion
+}
+
+void devolver() {
+  ...
+}

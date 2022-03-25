@@ -1,0 +1,5 @@
+Ya que mi letra no es muy bella, doy una pequeña explicación de la parte A:
+- Si 4 jugadores ya han llamado la función y están esperando a tickets, luego llega un quinto, les da los ticket a 
+tickets, 3 de esos jugadores previos logran retornar su equipo, pero uno de ellos se demora demasiado (demasiadísimo) 
+en tomar el ticket de tickets y lo toma un sexto jugador, haciendo que este sexto jugador retorne un equipo conformado 
+por sólo él mismo (o supongo que máximo dos jugadores, j6 y j7). Esto ya que el jugador 5 ya hizo equipo=nMalloc.

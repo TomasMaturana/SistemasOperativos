@@ -1,0 +1,54 @@
+==2554== drd, a thread error detector
+==2554== Copyright (C) 2006-2017, and GNU GPL'd, by Bart Van Assche.
+==2554== Using Valgrind-3.14.0 and LibVEX; rerun with -h for copyright info
+==2554== Command: ./test-t4
+==2554== 
+==2554== (action at startup) vgdb me ... 
+==2554== 
+==2554== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==2554==   /path/to/gdb ./test-t4
+==2554== and then give GDB the following command
+==2554==   target remote | /usr/lib/x86_64-linux-gnu/valgrind/../../bin/vgdb --pid=2554
+==2554== --pid is optional if only one valgrind process is running
+==2554== 
+El ejemplo del enunciado
+------------------------
+
+Tpo=0: T1 (core 1) invoca pedir(0)
+Tpo=0: T1 cat 0 obtiene recurso
+Tpo=1:                     T3 (core 2) invoca pedir(0)
+Tpo=2:           T2 (core 3) invoca pedir(1)
+Tpo=3:                                         T5 (core 4) invoca pedir(0)
+Tpo=3: Esperando que T1 termine
+Tpo=4: T1 devuelve recurso
+Tpo=4:           T2 cat 1 obtiene recurso
+Tpo=4: T1 termino
+Tpo=5:                               T4 (core 5) invoca pedir(1)
+Tpo=6:           T2 devuelve recurso
+Tpo=6:                     T3 cat 0 obtiene recurso
+Tpo=6:           Esperando que T2 termine
+Tpo=6:           T2 termino
+Tpo=6:                     Esperando que T3 termine
+Tpo=7:                     T3 devuelve recurso
+Tpo=7:                               T4 cat 1 obtiene recurso
+Tpo=7:                     T3 termino
+Tpo=7:                               Esperando que T4 termine
+Tpo=8:                               T4 devuelve recurso
+Tpo=8:                               T4 termino
+Tpo=8:                                         Esperando que T5 termine
+Tpo=8:                                         T5 cat 0 obtiene recurso
+Tpo=9:                                         T5 devuelve recurso
+Tpo=9:                                         T5 termino
+
+Test de robustez
+----------------
+
+
+despliega unos 70 puntos
+c1 c2 c3 ... significa que ese core comenzo a trabajar
+
+c1c2c3c4c5c6.c7c8c9c10c11c12.c13c14c15c16c17c18c19c20c21c22c23c24c25c26c27c28c29c30c31c32....
+Felicitaciones: funciona
+==2554== 
+==2554== For counts of detected and suppressed errors, rerun with: -v
+==2554== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 146 from 30)
